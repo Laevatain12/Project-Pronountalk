@@ -265,7 +265,7 @@ function renderSoal(u) {
   const cards = KEYS.map((k, i) => {
     const h = u.hasil[k];
     const status = h ? `<span class="chip ${pct(h) >= 70 ? 'ok' : 'bad'}">Skor ${h.skor}/${h.total}</span>` : '<span class="chip">Belum dikerjakan</span>';
-    return `<div class="bagian-card" style="--d:${i * 0.08}s">
+    return `<div class="bagian-card" data-k="${k}" style="--d:${i * 0.08}s">
       <div class="b-ikon">${BAGIAN[k].ikon}</div>
       <h3 style="margin-top:12px">${BAGIAN[k].nama}</h3>
       <p class="note">${BAGIAN[k].desc}</p>
@@ -283,7 +283,7 @@ function startQuiz(k) {
   if (!items.length) { toast('Soal untuk bagian ini belum tersedia', 'bad'); return; }
   quiz = { bagian: k, items, i: 0, skor: 0, locked: false };
   $('#soalContent').innerHTML = `
-    <div class="quiz">
+    <div class="quiz" data-k="${k}">
       <div class="quiz-top">
         <button class="btn ghost small" id="quitQuiz">← Kembali</button>
         <span class="chip" id="qinfo"></span>
@@ -397,13 +397,13 @@ function renderSkor(u) {
 
   const rincian = KEYS.map(k => {
     const h = u.hasil[k];
-    if (!h) return `<div class="skor-row">
+    if (!h) return `<div class="skor-row" data-k="${k}">
         <div class="b-ikon sm">${BAGIAN[k].ikon}</div>
         <div class="grow"><strong>${BAGIAN[k].nama}</strong><p class="note">Belum dikerjakan</p></div>
         <span class="chip">—</span></div>`;
     const p = pct(h);
     const prev = u.sebelum && u.sebelum[k] ? `<p class="note">Sebelumnya ${u.sebelum[k].skor}/${u.sebelum[k].total}</p>` : '';
-    return `<div class="skor-row">
+    return `<div class="skor-row" data-k="${k}">
         <div class="b-ikon sm">${BAGIAN[k].ikon}</div>
         <div class="grow">
           <div class="row-between"><span>${BAGIAN[k].nama}</span><span>${h.skor}/${h.total}</span></div>
@@ -425,7 +425,7 @@ function renderSkor(u) {
   const terlemah = KEYS.slice().sort((a, b) => pct(u.hasil[a]) - pct(u.hasil[b]))[0];
   const perlu = KEYS.filter(k => pct(u.hasil[k]) < BATAS_MODUL);
   const modul = perlu.length
-    ? perlu.map(k => `<div class="modul-card">
+    ? perlu.map(k => `<div class="modul-card" data-k="${k}">
         <div><strong>${MODUL[k].nama}</strong><p class="note">${MODUL[k].desc}</p></div>
         <button class="btn ghost small" disabled>Segera hadir</button></div>`).join('')
     : `<p class="note">Semua bagian sudah cukup baik. Lanjutkan dengan pasangan belajar.</p>`;
