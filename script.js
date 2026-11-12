@@ -530,7 +530,7 @@ async function cariPasangan() {
 async function sendRequest(id) {
   const r = await apiPost('friend_request', { ke: id });
   toast(r.ok ? 'Permintaan chat terkirim 💬' : (r.error || 'Gagal mengirim permintaan'), r.ok ? 'ok' : 'bad');
-  if (r.ok) cariPasangan();
+  if (r.ok) { if (currentTab === 'teman') renderTeman(); else cariPasangan(); }
 }
 
 // ----- 5. Teman dan chat -----
@@ -539,6 +539,7 @@ async function renderTeman() {
   box.innerHTML = `<p class="note">Memuat teman…</p>`;
   try {
     await loadFriends();
+    await loadAll();
   } catch (err) {
     box.innerHTML = `<p class="note">Gagal memuat teman. ${esc(err.message)}</p>`;
     return;
@@ -547,7 +548,26 @@ async function renderTeman() {
   const teman = friendList.filter(f => f.status === 'accepted');
   const keluar = friendList.filter(f => f.status === 'pending' && f.arah === 'keluar');
 
+  const saya = currentUser();
+  const lainnya = Object.values(db).filter(x => saya && x.id !== saya.id && x.bio);
+  const cariHtml = lainnya.length ? lainnya.map(p => {
+    const f = friendList.find(x => x.id === p.id);
+    let aksi;
+    if (!f) aksi = `<button class="btn primary small" data-req="${p.id}">💬 Ajak chat</button>`;
+    else if (f.status === 'pending' && f.arah === 'keluar') aksi = '<span class="chip">Menunggu jawaban</span>';
+    else if (f.status === 'pending') aksi = '<span class="chip">Ada permintaan masuk di atas</span>';
+    else aksi = `<button class="btn primary small" data-chat="${p.id}">💬 Chat</button>`;
+    return `<div class="pair-card">
+      <div class="avatar">${initial(p.bio.nama)}</div>
+      <div class="grow"><strong>${esc(p.bio.nama)}</strong><p class="note">${esc(p.bio.sekolah)}</p></div>
+      ${aksi}
+    </div>`;
+  }).join('') : '<p class="note">Belum ada pengguna lain. Ajak teman kamu untuk daftar.</p>';
+
   box.innerHTML = `
+    <h3 class="section-title">Tambah teman</h3>
+    <div class="stack">${cariHtml}</div>
+
     <h3 class="section-title">Permintaan masuk</h3>
     <div class="stack">${masuk.length ? masuk.map(f => `
       <div class="pair-card">
