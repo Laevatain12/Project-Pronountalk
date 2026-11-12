@@ -396,3 +396,6 @@ input:focus { outline: none; border-color: var(--primary-2); box-shadow: 0 0 0 5
 .lang { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; background: rgba(255,255,255,.16); }
 .lang button { border: 0; background: transparent; color: inherit; padding: 6px 11px; border-radius: 999px; font-weight: 700; font-size: .8rem; cursor: pointer; }
 .lang button[aria-pressed="true"] { background: #fff; color: #222; }
+
+/* ===== Nama level di samping kode ===== */
+.lvl-name { font-size: .4em; font-weight: 700; margin-left: 12px; opacity: .8; vertical-align: middle; }
