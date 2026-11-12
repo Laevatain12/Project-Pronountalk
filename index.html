@@ -14,16 +14,20 @@
       <div class="logo">PT</div>
       <div>
         <h1>PronounTalk</h1>
-        <small>Latihan pronoun, selangkah demi selangkah</small>
+        <small data-i18n="brandSub">Latihan pronoun, selangkah demi selangkah</small>
       </div>
     </div>
     <div class="top-actions">
-      <div class="swatches" role="group" aria-label="Pilih tema">
-        <button class="swatch" data-set-theme="merah" style="--c:#9B1C1C" title="Tema merah" aria-label="Tema merah"></button>
-        <button class="swatch" data-set-theme="biru" style="--c:#1F4E8C" title="Tema biru" aria-label="Tema biru"></button>
-        <button class="swatch" data-set-theme="gelap" style="--c:#15171C" title="Tema gelap" aria-label="Tema gelap"></button>
+      <div class="lang" role="group" aria-label="Language">
+        <button data-set-lang="id" aria-pressed="true">ID</button>
+        <button data-set-lang="en" aria-pressed="false">EN</button>
       </div>
-      <button id="logoutBtn" class="btn ghost small hidden">Keluar</button>
+      <div class="swatches" role="group" aria-label="Tema">
+        <button class="swatch" data-set-theme="merah" style="--c:#9B1C1C" title="Merah" aria-label="Merah"></button>
+        <button class="swatch" data-set-theme="biru" style="--c:#1F4E8C" title="Biru" aria-label="Biru"></button>
+        <button class="swatch" data-set-theme="gelap" style="--c:#15171C" title="Gelap" aria-label="Gelap"></button>
+      </div>
+      <button id="logoutBtn" class="btn ghost small hidden" data-i18n="logout">Keluar</button>
     </div>
   </header>
 
@@ -32,44 +36,44 @@
     <section id="authScreen" class="screen">
       <div class="auth-wrap">
         <div class="hero-card">
-          <span class="pill">Basic English · Pronoun</span>
-          <h2>Belajar pronoun jadi lebih mudah</h2>
-          <p>Kerjakan tes singkat, lihat bagian yang masih lemah, lalu latihan bersama teman.</p>
+          <span class="pill" data-i18n="pill">Basic English · Pronoun</span>
+          <h2 data-i18n="heroTitle">Belajar pronoun jadi lebih mudah</h2>
+          <p data-i18n="heroDesc">Kerjakan tes singkat, lihat bagian yang masih lemah, lalu latihan bersama teman.</p>
           <ul class="perks">
-            <li>30 soal dalam 3 bagian</li>
-            <li>Penjelasan dalam Bahasa Indonesia</li>
-            <li>Papan skor dan pasangan belajar</li>
+            <li data-i18n="perk1">30 soal dalam 3 bagian</li>
+            <li data-i18n="perk2">Penjelasan dalam Bahasa Indonesia dan English</li>
+            <li data-i18n="perk3">Papan skor dan pasangan belajar</li>
           </ul>
         </div>
 
         <div class="card auth-card">
           <div class="seg">
-            <button class="seg-btn active" data-auth="login">Masuk</button>
-            <button class="seg-btn" data-auth="register">Daftar</button>
+            <button class="seg-btn active" data-auth="login" data-i18n="tabLogin">Masuk</button>
+            <button class="seg-btn" data-auth="register" data-i18n="tabRegister">Daftar</button>
           </div>
 
           <form id="loginForm" class="form">
             <div class="field">
-              <label for="le">Email</label>
+              <label for="le" data-i18n="lblEmail">Email</label>
               <input id="le" type="email" name="email" required autocomplete="email">
             </div>
             <div class="field">
-              <label for="lp">Kata sandi</label>
+              <label for="lp" data-i18n="lblPass">Kata sandi</label>
               <input id="lp" type="password" name="password" required minlength="6" autocomplete="current-password">
             </div>
-            <button class="btn primary full" type="submit">Masuk</button>
+            <button class="btn primary full" type="submit" data-i18n="btnLogin">Masuk</button>
           </form>
 
           <form id="registerForm" class="form hidden">
             <div class="field">
-              <label for="re">Email</label>
+              <label for="re" data-i18n="lblEmail">Email</label>
               <input id="re" type="email" name="email" required autocomplete="email">
             </div>
             <div class="field">
-              <label for="rp">Kata sandi (min. 6 karakter)</label>
+              <label for="rp" data-i18n="lblPassNew">Kata sandi (min. 6 karakter)</label>
               <input id="rp" type="password" name="password" required minlength="6" autocomplete="new-password">
             </div>
-            <button class="btn primary full" type="submit">Buat akun</button>
+            <button class="btn primary full" type="submit" data-i18n="btnRegister">Buat akun</button>
           </form>
 
           <p id="authMsg" class="msg" role="alert"></p>
@@ -82,27 +86,27 @@
       <div class="auth-wrap single">
         <div class="card form-card">
           <div class="steps">
-            <span class="step done">✓ Login</span>
-            <span class="step on">2 Biodata</span>
-            <span class="step">3 Tes</span>
+            <span class="step done" data-i18n="stepLogin">✓ Login</span>
+            <span class="step on" data-i18n="stepBio">2 Biodata</span>
+            <span class="step" data-i18n="stepTest">3 Tes</span>
           </div>
           <h2 id="bioTitle">Isi biodata</h2>
-          <p class="note">Data ini dipakai untuk papan skor dan pasangan belajar.</p>
+          <p class="note" data-i18n="bioNote">Data ini dipakai untuk papan skor dan pasangan belajar.</p>
           <form id="bioForm" class="form">
             <div class="field">
-              <label>Nama lengkap</label>
-              <input name="nama" required placeholder="Contoh: Rara Putri">
+              <label data-i18n="lblNama">Nama lengkap</label>
+              <input name="nama" required data-i18n-ph="phNama" placeholder="Contoh: Rara Putri">
             </div>
             <div class="field">
-              <label>Asal sekolah / kampus</label>
-              <input name="sekolah" required placeholder="Contoh: SMA Negeri 1">
+              <label data-i18n="lblSekolah">Asal sekolah / kampus</label>
+              <input name="sekolah" required data-i18n-ph="phSekolah" placeholder="Contoh: SMA Negeri 1">
             </div>
             <div class="field">
-              <label>Umur</label>
-              <input name="umur" type="number" min="5" max="99" required placeholder="Contoh: 19">
+              <label data-i18n="lblUmur">Umur</label>
+              <input name="umur" type="number" min="5" max="99" required data-i18n-ph="phUmur" placeholder="Contoh: 19">
             </div>
-            <button class="btn primary full" type="submit">Simpan &amp; lanjut →</button>
-            <button class="btn link full hidden" type="button" id="bioCancel">Batal</button>
+            <button class="btn primary full" type="submit" data-i18n="bioSave">Simpan &amp; lanjut →</button>
+            <button class="btn link full hidden" type="button" id="bioCancel" data-i18n="bioCancel">Batal</button>
           </form>
         </div>
       </div>
@@ -112,31 +116,31 @@
     <section id="dashScreen" class="screen hidden">
       <div class="dash">
         <aside class="side">
-          <button class="tab active" data-tab="biodata"><span class="t-ico">👤</span>Biodata</button>
-          <button class="tab" data-tab="skor"><span class="t-ico">🏆</span>Papan Skor</button>
-          <button class="tab" data-tab="soal"><span class="t-ico">📝</span>Soal Basic English</button>
-          <button class="tab" data-tab="teman"><span class="t-ico">💬</span>Teman</button>
+          <button class="tab active" data-tab="biodata"><span class="t-ico">👤</span><span data-i18n="tabBio">Biodata</span></button>
+          <button class="tab" data-tab="skor"><span class="t-ico">🏆</span><span data-i18n="tabSkor">Papan Skor</span></button>
+          <button class="tab" data-tab="soal"><span class="t-ico">📝</span><span data-i18n="tabSoal">Soal Basic English</span></button>
+          <button class="tab" data-tab="teman"><span class="t-ico">💬</span><span data-i18n="tabTeman">Teman</span></button>
         </aside>
 
         <div class="content">
           <div id="tab-biodata" class="panel">
-            <h2>Biodata</h2>
+            <h2 data-i18n="panelBio">Biodata</h2>
             <div id="bioView"></div>
-            <button id="editBioBtn" class="btn secondary">✏️ Ubah biodata</button>
+            <button id="editBioBtn" class="btn secondary" data-i18n="editBio">✏️ Ubah biodata</button>
           </div>
 
           <div id="tab-skor" class="panel hidden">
-            <h2>Papan Skor</h2>
+            <h2 data-i18n="panelSkor">Papan Skor</h2>
             <div id="skorContent"></div>
           </div>
 
           <div id="tab-soal" class="panel hidden">
-            <h2>Soal Basic English</h2>
+            <h2 data-i18n="panelSoal">Soal Basic English</h2>
             <div id="soalContent"></div>
           </div>
 
           <div id="tab-teman" class="panel hidden">
-            <h2>Teman &amp; Chat</h2>
+            <h2 data-i18n="panelTeman">Teman &amp; Chat</h2>
             <div id="temanContent"></div>
           </div>
         </div>
