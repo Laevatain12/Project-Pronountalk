@@ -305,6 +305,7 @@ const LEVELS = [
 ];
 function levelInfo(u) { const p = totalPct(u); return LEVELS.find(l => p >= l.min); }
 function levelOf(u) { const l = levelInfo(u); return l.kode + ' · ' + l.nama; }
+function levelHtml(u) { const l = levelInfo(u); return `${l.kode}<span class="lvl-name">${l.nama}</span>`; }
 const sudahSemua = u => KEYS.every(k => u.hasil && u.hasil[k]);
 const adaHasil = u => KEYS.some(k => u.hasil && u.hasil[k]);
 function jarakSkor(a, b) {
@@ -624,7 +625,7 @@ function renderHasil(k, skor, total) {
   const p = Math.round(skor / total * 100);
   const u = currentUser();
   const lvlBox = u && sudahSemua(u)
-    ? `<div class="level-box"><p class="eyebrow">${T('levelNow')}</p><div class="level">${levelOf(u)}</div></div>`
+    ? `<div class="level-box"><p class="eyebrow">${T('levelNow')}</p><div class="level">${levelHtml(u)}</div></div>`
     : '';
   const msg = p >= 80 ? T('resHigh') : p >= 50 ? T('resMid') : T('resLow');
   $('#soalContent').innerHTML = `
@@ -698,7 +699,7 @@ function renderSkor(u) {
       <div class="ring-wrap">${ringSvg()}<div class="ring-text"><span data-to="${tp}">0</span><span>%</span></div></div>
       <div>
         <p class="eyebrow">${T('levelNow')}</p>
-        <div class="level">${levelOf(u)}</div>
+        <div class="level">${levelHtml(u)}</div>
         <p>${T('weakest', { bagian: namaBagian(terlemah) })}</p>
       </div>
     </div>
