@@ -294,7 +294,17 @@ function totalPct(u) {
   const t = KEYS.reduce((a, k) => a + u.hasil[k].total, 0);
   return t ? Math.round(sk / t * 100) : 0;
 }
-function levelOf(u) { const p = totalPct(u); return p >= 80 ? 'B1' : p >= 50 ? 'A2' : 'A1'; }
+// Batas nilai total (%) untuk tiap level, dari tertinggi ke terendah
+const LEVELS = [
+  { min: 90, kode: 'A1', nama: 'Proficient' },
+  { min: 80, kode: 'A2', nama: 'Advanced' },
+  { min: 70, kode: 'B1', nama: 'Upper Intermediate' },
+  { min: 60, kode: 'B2', nama: 'Intermediate' },
+  { min: 40, kode: 'C1', nama: 'Elementary' },
+  { min: 0,  kode: 'C2', nama: 'Beginner' }
+];
+function levelInfo(u) { const p = totalPct(u); return LEVELS.find(l => p >= l.min); }
+function levelOf(u) { const l = levelInfo(u); return l.kode + ' · ' + l.nama; }
 const sudahSemua = u => KEYS.every(k => u.hasil && u.hasil[k]);
 const adaHasil = u => KEYS.some(k => u.hasil && u.hasil[k]);
 function jarakSkor(a, b) {
@@ -612,12 +622,17 @@ async function finishQuiz() {
 
 function renderHasil(k, skor, total) {
   const p = Math.round(skor / total * 100);
+  const u = currentUser();
+  const lvlBox = u && sudahSemua(u)
+    ? `<div class="level-box"><p class="eyebrow">${T('levelNow')}</p><div class="level">${levelOf(u)}</div></div>`
+    : '';
   const msg = p >= 80 ? T('resHigh') : p >= 50 ? T('resMid') : T('resLow');
   $('#soalContent').innerHTML = `
     <div class="result">
       <div class="ring-wrap">${ringSvg()}<div class="ring-text"><span data-to="${p}">0</span><span>%</span></div></div>
       <h3>${namaBagian(k)}: ${skor}/${total}</h3>
       <p class="note">${msg}</p>
+      ${lvlBox}
       <div class="result-actions">
         <button class="btn primary" data-go="skor">${T('resView')}</button>
         <button class="btn ghost" data-again="${k}">${T('btnRetry')}</button>
